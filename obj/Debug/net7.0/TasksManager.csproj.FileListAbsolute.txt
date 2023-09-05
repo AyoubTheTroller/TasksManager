@@ -1,0 +1,14 @@
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\TasksManager.exe
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\TasksManager.deps.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\TasksManager.runtimeconfig.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\TasksManager.dll
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\TasksManager.pdb
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.AssemblyInfoInputs.cache
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.AssemblyInfo.cs
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.csproj.CoreCompileInputs.cache
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.dll
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\refint\TasksManager.dll
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.pdb
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.genruntimeconfig.cache
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\ref\TasksManager.dll
