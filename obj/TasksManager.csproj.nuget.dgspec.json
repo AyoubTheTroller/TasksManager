@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj": {}
+    "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj": {
+    "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
+        "projectUniqueName": "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
         "projectName": "TasksManager",
-        "projectPath": "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
+        "projectPath": "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
         "packagesPath": "C:\\Users\\Lavoro\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\obj\\",
+        "outputPath": "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lavoro\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -37,6 +37,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Terminal.Gui": {
+              "target": "Package",
+              "version": "[1.14.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

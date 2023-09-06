@@ -9,7 +9,6 @@ namespace TasksManager.Model{
 
             if (users.Any(u => u.Username == username))
             {
-                Console.WriteLine($"A user with the username '{username}' already exists.");
                 return;
             }
 

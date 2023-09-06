@@ -21,6 +21,15 @@ public class LaunchApplication{
 
     public void initializeConsoleMenu(){
         Console.Clear();
+        ConsoleGui consoleGui = new ConsoleGui();
+        Result? credentials = consoleGui.ShowLoginOrSignup();
+        AuthenticateUser authenticateUser = new AuthenticateUser(credentials?.Username ,credentials?.Password);
+        if(credentials?.Action == "Signup")
+            authenticateUser.signUp();
+    }
+
+    /*public void initializeConsoleMenu(){
+        Console.Clear();
         Console.WriteLine(loginOrSignup());
         manageUserFirstInput();
     }
@@ -55,7 +64,7 @@ public class LaunchApplication{
                 break;
             }
         }
-    }
+    }*/
 
     public string? loginOrSignup(){
         return "Login or signup?\n"

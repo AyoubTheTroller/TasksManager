@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "Dhc9jadkgBttOLY1CGkm9JilwJiBtc8omlZ7CrOxi/KUa2rm7e+PA1Y7lq7oSNi5SdJxCbocyc0wLeMCHB0QzQ==",
+  "dgSpecHash": "seX0KuxG1dlCI0xNNN1pd5uWghE1n4b8NmEmogbw4/leeTtBRlvFIyKAknkOpJfBDnDxA6NYm7rGuSKfzedugQ==",
   "success": true,
-  "projectFilePath": "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lavoro\\.nuget\\packages\\nstack.core\\1.0.7\\nstack.core.1.0.7.nupkg.sha512",
+    "C:\\Users\\Lavoro\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
+    "C:\\Users\\Lavoro\\.nuget\\packages\\system.management\\7.0.2\\system.management.7.0.2.nupkg.sha512",
+    "C:\\Users\\Lavoro\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\Lavoro\\.nuget\\packages\\terminal.gui\\1.14.0\\terminal.gui.1.14.0.nupkg.sha512"
+  ],
   "logs": []
 }
