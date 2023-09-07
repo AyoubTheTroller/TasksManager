@@ -1,4 +1,4 @@
-using TasksManager.Model;
+using TasksManager.service;
 
 class AuthenticateUser{
     string? _username;
@@ -11,5 +11,12 @@ class AuthenticateUser{
     public void signUp(){
         userService = new UserService();
         userService.addUser(_username, _password);
+        try{
+            userService.addUser(_username, _password);
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
