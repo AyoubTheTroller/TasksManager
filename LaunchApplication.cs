@@ -19,14 +19,14 @@ public class LaunchApplication{
     public void Launch(){
         switch(usingType){
             case "CA":
-                initializeConsoleMenu();
+                initializeGui();
                 break;
             default:
                 break;
         }
     }
 
-    public void initializeConsoleMenu(){
+    public void initializeGui(){
         Console.Clear();
         GuiStateManager guiState = new GuiStateManager(dataLoader?.Users,dataLoader?.Projects,dataLoader?.Tasks);
         guiState.Run();

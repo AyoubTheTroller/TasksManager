@@ -1,12 +1,11 @@
-using TasksManager.controller;
 using TasksManager.Model;
 using TasksManager.service;
 using Terminal.Gui;
 public class ConsoleGui
 {   
-    public event Action<Result> OnLogin;
-    public event Action<Result> OnSignup;
-    public event Action<TaskResult> OnTaskAdded;
+    public event Action<Result>? OnLogin;
+    public event Action<Result>? OnSignup;
+    public event Action<TaskResult>? OnTaskAdded;
 
     private List<User>? users;
     private List<Project>? projects;
@@ -75,7 +74,8 @@ public class ConsoleGui
             var selectedUsers = userCheckboxes.Where(uc => uc.Checked).Select(uc => uc.Text.ToString()).ToList();
             var selectedProjects = projectCheckboxes.Where(pc => pc.Checked).Select(pc => pc.Text.ToString()).ToList();
             TaskResult? taskData = HandleBtnCreateTask(txtTaskName, selectedUsers, selectedProjects);
-            if (taskData != null) {
+            if (taskData != null) 
+            {
                 var newTask = new Taskk
                 {
                     Description = taskData.TaskName,
@@ -85,6 +85,28 @@ public class ConsoleGui
                 tasks?.Add(newTask);
                 tasksListView?.SetSource(tasks?.Select(t => t.Description).ToList());
                 new TaskService().AddTask(newTask);
+                
+                var projectTaskUserService = new ProJectTaskUserService();
+                // Associate users with the task
+                foreach (var user in selectedUsers)
+                {
+                    projectTaskUserService.AddAssociation(new ProJectTaskUser
+                    {
+                        taskId = newTask.Id,
+                        userName = user,
+                        projectName = null
+                    });
+                }
+                // Associate project with the task
+                foreach (var project in selectedProjects)
+                {
+                    projectTaskUserService.AddAssociation(new ProJectTaskUser
+                    {
+                        taskId = newTask.Id,
+                        userName = null,
+                        projectName = project
+                    });
+                }
 
                 OnTaskAdded?.Invoke(taskData);
             }
@@ -208,128 +230,9 @@ public class ConsoleGui
             }
         }
     }
-
     
     public void DisplayError(string errorMessage){
         MessageBox.ErrorQuery("Error", errorMessage, "Ok");
     }
-
-    
 }
 
-public class Result
-{
-    public string? Action { get; set; }
-    public string? Username { get; set; }
-    public string? Password { get; set; }
-
-    public Result(string action, string username, string password)
-    {
-        Action = action;
-        Username = username;
-        Password = password;
-    }
-}
-
-public class TaskResult
-{
-    public string? TaskName { get; set; }
-    public string? AssignedUser { get; set; }
-    public string? AssignedProject { get; set; }
-
-    public TaskResult(string taskName, string assignedUser, string assignedProject)
-    {
-        TaskName = taskName;
-        AssignedUser = assignedUser;
-        AssignedProject = assignedProject;
-    }
-}
-
-public class GuiStateManager
-{
-    private Window? currentWindow;
-    private ConsoleGui gui;
-    private UserController userController = new UserController();
-
-    public GuiStateManager(List<User>? users, List<Project>? projects, List<Taskk>? tasks)
-    {
-        gui = new ConsoleGui(users, projects, tasks);
-        gui.OnLogin += HandleLogin;
-        gui.OnSignup += HandleSignup;
-        gui.OnTaskAdded += HandleTaskAdded;
-
-    }
-
-    private void HandleTaskAdded(TaskResult taskResult){
-        MessageBox.Query("Success", "Task has been added successfully.", "Ok");
-    }
-
-
-    private void HandleLogin(Result result)
-    {
-        var actionResult = userController.ProcessUserInput(result);
-        if (actionResult == UserActionResult.Success)
-        {
-            ShowDashboard();
-        }
-        else
-        {
-            DisplayError("Login failed.");
-        }
-    }
-
-    private void HandleSignup(Result result)
-    {
-        var actionResult = userController.ProcessUserInput(result);
-        if (actionResult == UserActionResult.Success)
-        {
-            ShowDashboard();
-        }
-        else
-        {
-            DisplayError("Signup failed.");
-        }
-    }
-
-    public void Run()
-    {
-        Application.Init();
-        ShowLoginOrSignup();
-        Application.Run();
-    }
-
-    public void ShowLoginOrSignup()
-    {
-        if (currentWindow != null)
-        {
-            currentWindow.Visible = false;
-        }
-        
-        currentWindow = gui.ShowLoginOrSignup();
-        Application.Top.Add(currentWindow);
-        currentWindow.Visible = true;
-    }
-
-    public void ShowDashboard()
-    {
-        if (currentWindow != null)
-        {
-            currentWindow.Visible = false;
-        }
-
-        currentWindow = gui.ShowDashboard();
-        Application.Top.Add(currentWindow);
-        currentWindow.Visible = true;
-    }
-
-    public void DisplayError(string message)
-    {
-        gui.DisplayError(message);
-    }
-
-    public Result? getLastLoginSignupResult()
-    {
-        return gui.LastLoginSignupResult;
-    }
-
-}
