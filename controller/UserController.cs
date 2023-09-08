@@ -2,32 +2,42 @@ using TasksManager.Model;
 using TasksManager.service;
 
 namespace TasksManager.controller{
+    public enum UserActionResult{
+        Success,
+        Failure
+    }
+
     public class UserController
     {
         private AuthenticateUser? authUser;
-        private UserService userService;
-        private ConsoleGui view;
+        private UserService? userService;
 
-        public UserController(ConsoleGui guiView)
+        public UserController()
         {
             userService = new UserService();
-            view = guiView;
         }
 
-        public void ProcessUserInput(Result? userInput)
+        public UserActionResult ProcessUserInput(Result userInput)
         {
-            if (userInput?.Action == "Signup")
+            try
             {
-                try
+                if (userInput.Action == "Signup")
                 {
                     authUser = new AuthenticateUser(userInput.Username, userInput.Password);
                     authUser.signUp();
-                    view.ShowDashboard();
+                    return UserActionResult.Success;
                 }
-                catch (InvalidOperationException ex)
+                else if (userInput.Action == "Login")
                 {
-                    view.DisplayError(ex.Message);
+                    authUser = new AuthenticateUser(userInput.Username, userInput.Password);
+                    authUser.logIn(userInput.Username, userInput.Password);
+                    return UserActionResult.Success;
                 }
+                return UserActionResult.Failure;
+            }
+            catch (InvalidOperationException)
+            {
+                return UserActionResult.Failure;
             }
         }
     }

@@ -1,7 +1,4 @@
-using System.ComponentModel;
-using System.Xml.Serialization;
 using TasksManager.controller;
-using TasksManager.Model;
 using TasksManager.service;
 
 public class LaunchApplication{
@@ -31,9 +28,8 @@ public class LaunchApplication{
 
     public void initializeConsoleMenu(){
         Console.Clear();
-        ConsoleGui consoleGui = new ConsoleGui(dataLoader?.Users,dataLoader?.Projects,dataLoader?.Tasks);
-        UserController userController = new UserController(consoleGui);
-        Result? credentials = consoleGui?.ShowLoginOrSignup();
-        userController.ProcessUserInput(credentials);
+        GuiStateManager guiState = new GuiStateManager(dataLoader?.Users,dataLoader?.Projects,dataLoader?.Tasks);
+        guiState.Run();
     }
+
 }

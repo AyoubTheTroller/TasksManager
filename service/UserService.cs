@@ -34,5 +34,21 @@ namespace TasksManager.service{
 
             return new List<User>();
         }
+
+        public User? SearchUser(string? username){
+            if (string.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+            if (File.Exists("users.json"))
+            {
+                string jsonString = File.ReadAllText("users.json");
+                var users = JsonSerializer.Deserialize<List<User>>(jsonString) ?? new List<User>();
+                return users.FirstOrDefault(u => u.Username == username);
+            }
+
+            return null;
+        }
+
     }
 }
