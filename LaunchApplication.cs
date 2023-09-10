@@ -4,16 +4,16 @@ using TasksManager.service;
 public class LaunchApplication{
 
     string? usingType;
-    private UserService? userService;
-    private TaskService? taskService;
-    private ProjectService? projectService;
+    private UserService? _userService;
+    private TaskService? _taskService;
+    private ProjectService? _projectService;
     private DataLoader? dataLoader;
     public LaunchApplication(string? usingType){
         this.usingType = usingType;
-        userService = new UserService();
-        taskService = new TaskService();
-        projectService = new ProjectService();  
-        dataLoader = new DataLoader(userService,taskService,projectService);
+        _userService = new UserService();
+        _taskService = new TaskService();
+        _projectService = new ProjectService();  
+        dataLoader = new DataLoader(_userService,_taskService,_projectService);
     }
 
     public void Launch(){
@@ -28,7 +28,7 @@ public class LaunchApplication{
 
     public void initializeGui(){
         Console.Clear();
-        GuiStateManager guiState = new GuiStateManager(dataLoader?.Users,dataLoader?.Projects,dataLoader?.Tasks);
+        GuiStateManager guiState = new GuiStateManager(dataLoader?.Users,dataLoader?.Projects,dataLoader?.Tasks,_userService,_taskService,_projectService);
         guiState.Run();
     }
 

@@ -3,7 +3,7 @@ using TasksManager.Model;
 
 namespace TasksManager.service{
     public class TaskService{
-        public void AddTask(Taskk task)
+        public void AddTask(Taskk? task)
         {
             List<Taskk> tasks = ReadTasks();
             int newId = 1;
@@ -12,9 +12,11 @@ namespace TasksManager.service{
                 int maxId = tasks.Max(task => task.Id);
                 newId = maxId + 1;
             }
-            task.Id = newId;
-            tasks.Add(task);
-            SaveTasks(tasks);
+            if(task is not null){
+                task.Id = newId;
+                tasks.Add(task);
+                SaveTasks(tasks);
+            }
         }
 
         public void SaveTasks(List<Taskk> tasks)

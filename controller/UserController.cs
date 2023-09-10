@@ -10,11 +10,11 @@ namespace TasksManager.controller{
     public class UserController
     {
         private AuthenticateUser? authUser;
-        private UserService? userService;
+        private UserService? _userService;
 
-        public UserController()
+        public UserController(UserService? userService)
         {
-            userService = new UserService();
+            _userService = userService;
         }
 
         public UserActionResult ProcessUserInput(Result userInput)
@@ -23,13 +23,13 @@ namespace TasksManager.controller{
             {
                 if (userInput.Action == "Signup")
                 {
-                    authUser = new AuthenticateUser(userInput.Username, userInput.Password);
+                    authUser = new AuthenticateUser(userInput.Username, userInput.Password, _userService);
                     authUser.signUp();
                     return UserActionResult.Success;
                 }
                 else if (userInput.Action == "Login")
                 {
-                    authUser = new AuthenticateUser(userInput.Username, userInput.Password);
+                    authUser = new AuthenticateUser(userInput.Username, userInput.Password, _userService);
                     authUser.logIn(userInput.Username, userInput.Password);
                     return UserActionResult.Success;
                 }

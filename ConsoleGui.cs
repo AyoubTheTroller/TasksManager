@@ -5,13 +5,17 @@ public class ConsoleGui
 {   
     public event Action<Result>? OnLogin;
     public event Action<Result>? OnSignup;
-    public event Action<TaskResult>? OnTaskAdded;
+    public event Action<Taskk>? OnTaskAdded;
+    public event Action<Project>? OnProjectAdded;
 
     private List<User>? users;
     private List<Project>? projects;
     private List<Taskk>? tasks;
 
     private ListView? tasksListView; 
+
+    private ListView? projectsListView;
+    
     public Result? LastLoginSignupResult { get; private set; }
 
     public ConsoleGui(List<User>? users, List<Project>? projects, List<Taskk>? tasks)
@@ -34,13 +38,67 @@ public class ConsoleGui
         };
         ShowAddTaskForm(win);
         ShowTaskList(win);
+        ShowExitButton(win);
+        ShowAddProjectForm(win);
+        ShowProjectList(win);
         return win;        
     }
 
+    private void ShowAddProjectForm(Window win){
+        int yOffset = 3;
+
+        var lblAddProject = new Label(100, yOffset - 2, "Add Project:");
+
+        var lblProjectName = new Label(100, yOffset, "Project Name:");
+        var txtProjectName = new TextField(115, yOffset, 40, "");
+        win.Add(lblAddProject, lblProjectName, txtProjectName);
+
+        var lblCreationDate = new Label(100, yOffset + 2, "Creation Date:");
+        var creationDatePicker = new DateField(115, yOffset + 2, DateTime.Now);
+        win.Add(lblCreationDate, creationDatePicker);
+
+        var btnCreateProject = new Button(100, yOffset + 4, "Create Project");
+        btnCreateProject.Clicked += () =>
+        {
+            string? projectName = txtProjectName.Text.ToString();
+
+            if (string.IsNullOrEmpty(projectName))
+            {
+                MessageBox.ErrorQuery("Error", "Please fill in all fields for the project.", "Ok");
+                return;
+            }
+
+            var newProject = new Project
+            {
+                name = projectName,
+                CreationDate = creationDatePicker.Date
+            };
+
+            projects?.Add(newProject);
+            OnProjectAdded?.Invoke(newProject);
+            MessageBox.Query("Success", "Project has been added successfully.", "Ok");
+        };
+
+        win.Add(btnCreateProject);
+    }
+
+    private void ShowExitButton(Window win){
+        int yPos = 12 + (users?.Count ?? 0) + (projects?.Count ?? 0);
+        
+        var btnExit = new Button(1, yPos, "Exit");
+        btnExit.Clicked += () => 
+        {
+            Application.RequestStop();
+        };
+        win.Add(btnExit);
+    }
+
+
     private void ShowAddTaskForm(Window win){
+        var lblAddTask = new Label(1, 1, "Add new task");
         var lblTaskName = new Label(1, 2, "Task Description:");
-        var txtTaskName = new TextField(15, 2, 40, "");
-        win.Add(lblTaskName, txtTaskName);
+        var txtTaskName = new TextField(19, 2, 40, "");
+        win.Add(lblAddTask, lblTaskName, txtTaskName);
 
         var lblAssignedUser = new Label(1, 4, "Assign to User:");
         win.Add(lblAssignedUser);
@@ -48,7 +106,7 @@ public class ConsoleGui
         var userCheckboxes = new List<CheckBox>();
         for (int i = 0; i < users?.Count; i++)
         {
-            var checkbox = new CheckBox(15, 4 + i, users?[i].Username ?? "");
+            var checkbox = new CheckBox(19, 4 + i, users?[i].Username ?? "");
             userCheckboxes.Add(checkbox);
             win.Add(checkbox);
         }
@@ -59,13 +117,13 @@ public class ConsoleGui
         var projectCheckboxes = new List<CheckBox>();
         for (int i = 0; i < projects?.Count; i++)
         {
-            var checkbox = new CheckBox(15, 6 + (users?.Count ?? 0) + i, projects?[i].name ?? "");
+            var checkbox = new CheckBox(19, 6 + (users?.Count ?? 0) + i, projects?[i].name ?? "");
             projectCheckboxes.Add(checkbox);
             win.Add(checkbox);
         }
 
         var lblExpirationDate = new Label(1, 8 + (users?.Count ?? 0) + (projects?.Count ?? 0), "Expiration Date:");
-        var expirationDatePicker = new DateField(15, 8 + (users?.Count ?? 0) + (projects?.Count ?? 0), DateTime.Now);
+        var expirationDatePicker = new DateField(19, 8 + (users?.Count ?? 0) + (projects?.Count ?? 0), DateTime.Now);
         win.Add(lblExpirationDate, expirationDatePicker);
 
         var btnCreateTask = new Button(1, 10 + (users?.Count ?? 0) + (projects?.Count ?? 0), "Create Task");
@@ -84,7 +142,6 @@ public class ConsoleGui
                 };
                 tasks?.Add(newTask);
                 tasksListView?.SetSource(tasks?.Select(t => t.Description).ToList());
-                new TaskService().AddTask(newTask);
                 
                 var projectTaskUserService = new ProJectTaskUserService();
                 // Associate users with the task
@@ -107,8 +164,8 @@ public class ConsoleGui
                         projectName = project
                     });
                 }
-
-                OnTaskAdded?.Invoke(taskData);
+                OnTaskAdded?.Invoke(newTask);  
+                MessageBox.Query("Success", "Task has been added successfully.", "Ok");
             }
         };
         win.Add(btnCreateTask);
@@ -137,6 +194,13 @@ public class ConsoleGui
         win.Add(lblTasks, tasksListView);
     }
 
+    private void ShowProjectList(Window win){
+        int yOffset = 15; 
+        var lblProjects = new Label(60, yOffset, "Projects:");
+        projectsListView = new ListView(new Rect(60, yOffset + 2, 40, 10), projects?.Select(p => p.name).ToArray());
+        win.Add(lblProjects, projectsListView);
+    }
+
     public Window ShowLoginOrSignup(){
 
         var win = new Window("Login or Signup")
@@ -146,7 +210,11 @@ public class ConsoleGui
             Width = Dim.Fill(), // Default behaviour for the Window Class, so it is not needed actually
             Height = Dim.Fill() // Default behaviour for the Window Class, so it is not needed actually
         };
+        LoginOrSignup(win);
+        return win;
+    }
 
+    private void LoginOrSignup(Window win){
         var radioGroup = new RadioGroup(1, 1, new NStack.ustring[] { "_Login", "_Signup" });
         win.Add(radioGroup);
 
@@ -187,8 +255,13 @@ public class ConsoleGui
                 txtConfirmPassword.Visible = true;
             }
         };
-
-        return win;
+        // Exit button
+        var btnExit = new Button(1, 11, "Exit");
+        btnExit.Clicked += () => 
+        {
+            Application.RequestStop();
+        };
+        win.Add(btnExit);
     }
 
     private void HandleBtnSignupAndLogicAction(ref Result? result, RadioGroup radioGroup, TextField txtUsername, TextField txtPassword, TextField txtConfirmPassword){

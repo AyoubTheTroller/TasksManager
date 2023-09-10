@@ -4,16 +4,16 @@ using TasksManager.service;
 class AuthenticateUser{
     string? _username;
     string? _password;
-    UserService? userService;
-    public AuthenticateUser(string? username, string? password){
+    UserService? _userService;
+    public AuthenticateUser(string? username, string? password, UserService? userService){
         this._username = username;
         this._password = password;
-        userService = new UserService();
+        _userService = userService;
     }
     public void signUp(){
-        userService?.addUser(_username, _password);
+        _userService?.addUser(_username, _password);
         try{
-            userService?.addUser(_username, _password);
+            _userService?.addUser(_username, _password);
         }
         catch (InvalidOperationException ex)
         {
@@ -22,7 +22,7 @@ class AuthenticateUser{
     }
 
     public void logIn(string? username, string? password){
-        User? user = userService?.SearchUser(username);
+        User? user = _userService?.SearchUser(username);
         if (user != null && password is not null){
             if(!password.Equals(user.Password)){
                 throw new InvalidOperationException("Wrong Password, retry");

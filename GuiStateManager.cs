@@ -1,30 +1,43 @@
 using TasksManager.controller;
+using TasksManager.service;
 using TasksManager.Model;
 using Terminal.Gui;
 public class GuiStateManager
 {
     private Window? currentWindow;
     private ConsoleGui gui;
-    private UserController userController = new UserController();
+    
+    private UserController _userController;
 
-    public GuiStateManager(List<User>? users, List<Project>? projects, List<Taskk>? tasks)
-    {
+    private TaskController _taskController;
+
+    private ProjectController _projectController;
+
+    public GuiStateManager(List<User>? users, List<Project>? projects, List<Taskk>? tasks,UserService? userService,TaskService? taskService,ProjectService? projectService){
+        _userController = new UserController(userService);
+        _taskController = new TaskController(taskService);
+        _projectController = new ProjectController(projectService);
         gui = new ConsoleGui(users, projects, tasks);
         gui.OnLogin += HandleLogin;
         gui.OnSignup += HandleSignup;
-        gui.OnTaskAdded += HandleTaskAdded;
+        gui.OnTaskAdded += HandleAddTask;
+        gui.OnProjectAdded += HandleAddProject;
 
     }
 
-    private void HandleTaskAdded(TaskResult taskResult){
-        MessageBox.Query("Success", "Task has been added successfully.", "Ok");
+    private void HandleAddTask(Taskk task){
+        _taskController.UpdateTaskData(task);
+        ShowDashboard();
     }
 
-
+    private void HandleAddProject(Project project){
+        _projectController.UpdateProjectData(project);
+        ShowDashboard();
+    }
 
     private void HandleLogin(Result result)
     {
-        var actionResult = userController.ProcessUserInput(result);
+        var actionResult = _userController.ProcessUserInput(result);
         if (actionResult == UserActionResult.Success)
         {
             ShowDashboard();
@@ -37,7 +50,7 @@ public class GuiStateManager
 
     private void HandleSignup(Result result)
     {
-        var actionResult = userController.ProcessUserInput(result);
+        var actionResult = _userController.ProcessUserInput(result);
         if (actionResult == UserActionResult.Success)
         {
             ShowDashboard();
