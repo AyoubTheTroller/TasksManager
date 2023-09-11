@@ -1,5 +1,6 @@
 using System.Text.Json;
 using TasksManager.Model;
+using TasksManager.exception;
 
 namespace TasksManager.service{
     public class UserService{
@@ -9,7 +10,7 @@ namespace TasksManager.service{
 
             if (users.Any(u => u.Username == username))
             {
-                throw new InvalidOperationException("User already exists");
+                throw new AuthenticationException("User already exists");
             }
 
             var newUser = new User { Username = username, Password = password };

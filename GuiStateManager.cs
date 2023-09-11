@@ -26,7 +26,6 @@ public class GuiStateManager
         gui.OnTaskAdded += HandleAddTask;
         gui.OnProjectAdded += HandleAddProject;
         gui.onTaskAddAssociation += HandleTasksAssociation;
-
     }
 
     private void HandleAddTask(Taskk task){
@@ -69,26 +68,26 @@ public class GuiStateManager
     private void HandleLogin(Result result)
     {
         var actionResult = _userController.ProcessUserInput(result);
-        if (actionResult == UserActionResult.Success)
+        if (actionResult.Status == ActionResultStatus.Success)
         {
             ShowDashboard();
         }
         else
         {
-            DisplayError("Login failed.");
+            DisplayError($"Login failed. Reason: {actionResult.Message}");
         }
     }
 
     private void HandleSignup(Result result)
     {
         var actionResult = _userController.ProcessUserInput(result);
-        if (actionResult == UserActionResult.Success)
+        if (actionResult.Status == ActionResultStatus.Success)
         {
             ShowDashboard();
         }
         else
         {
-            DisplayError("Signup failed.");
+            DisplayError($"Signup failed. Reason: {actionResult.Message}");
         }
     }
 

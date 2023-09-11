@@ -1,5 +1,6 @@
 using TasksManager.Model;
 using TasksManager.service;
+using TasksManager.exception;
 
 class AuthenticateUser{
     string? _username;
@@ -15,7 +16,7 @@ class AuthenticateUser{
         try{
             _userService?.addUser(_username, _password);
         }
-        catch (InvalidOperationException ex)
+        catch (AuthenticationException ex)
         {
             Console.WriteLine(ex.Message);
         }
@@ -25,11 +26,11 @@ class AuthenticateUser{
         User? user = _userService?.SearchUser(username);
         if (user != null && password is not null){
             if(!password.Equals(user.Password)){
-                throw new InvalidOperationException("Wrong Password, retry");
+                throw new InvalidPasswordException();
             }
         }
         else{
-            throw new InvalidOperationException("User not found");
+            throw new InvalidUsernameException();
         }
     }
 }
