@@ -14,6 +14,9 @@ namespace TasksManager.controller{
         public void UpdateTaskData(Taskk? taskk){
             _taskService?.AddTask(taskk);
         }
-        
+        public List<Taskk> GetAllTasks()
+        {
+            return _taskService?.GetAllTasks() ?? new List<Taskk>();
+        }
     }
 }

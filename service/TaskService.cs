@@ -35,6 +35,21 @@ namespace TasksManager.service{
 
             return new List<Taskk>();
         }
+
+        public List<Taskk> GetAllTasks()
+        {
+            return ReadTasks();
+        }
+
+        public Taskk? GetTaskById(int? id){
+            List<Taskk> allTasks = ReadTasks();
+            foreach(var task in allTasks){
+                if(task.Id.Equals(id)){
+                    return task;
+                }
+            }
+            return null;
+        }
     }
 }
 

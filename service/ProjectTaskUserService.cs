@@ -3,7 +3,7 @@ using TasksManager.Model;
 
 namespace TasksManager.service
 {
-    public class ProJectTaskUserService
+    public class ProjectTaskUserService
     {
         public void AddAssociation(ProJectTaskUser association)
         {

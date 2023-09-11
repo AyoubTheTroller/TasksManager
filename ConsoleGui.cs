@@ -7,6 +7,7 @@ public class ConsoleGui
     public event Action<Result>? OnSignup;
     public event Action<Taskk>? OnTaskAdded;
     public event Action<Project>? OnProjectAdded;
+    public event Action<TaskResult>? onTaskAddAssociation;
 
     private List<User>? users;
     private List<Project>? projects;
@@ -24,8 +25,6 @@ public class ConsoleGui
         this.projects = projects;
         this.tasks = tasks;
     }
-
-    public ConsoleGui(){}
 
     public Window ShowDashboard()
     {
@@ -142,29 +141,11 @@ public class ConsoleGui
                 };
                 tasks?.Add(newTask);
                 tasksListView?.SetSource(tasks?.Select(t => t.Description).ToList());
-                
-                var projectTaskUserService = new ProJectTaskUserService();
-                // Associate users with the task
-                foreach (var user in selectedUsers)
-                {
-                    projectTaskUserService.AddAssociation(new ProJectTaskUser
-                    {
-                        taskId = newTask.Id,
-                        userName = user,
-                        projectName = null
-                    });
-                }
-                // Associate project with the task
-                foreach (var project in selectedProjects)
-                {
-                    projectTaskUserService.AddAssociation(new ProJectTaskUser
-                    {
-                        taskId = newTask.Id,
-                        userName = null,
-                        projectName = project
-                    });
-                }
-                OnTaskAdded?.Invoke(newTask);  
+
+                OnTaskAdded?.Invoke(newTask); 
+                taskData.id = newTask.Id;
+                onTaskAddAssociation?.Invoke(taskData);
+                 
                 MessageBox.Query("Success", "Task has been added successfully.", "Ok");
             }
         };

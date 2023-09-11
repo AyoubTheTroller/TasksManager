@@ -22,3 +22,16 @@ C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\re
 C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.pdb
 C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.genruntimeconfig.cache
 C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\ref\TasksManager.dll
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\associations.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\projects.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\tasks.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\bin\Debug\net7.0\users.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\TasksManager.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets\msbuild.TasksManager.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets\msbuild.build.TasksManager.props
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.TasksManager.props
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.TasksManager.props
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\Lavoro\Desktop\Random Projects\ASP.NET\TasksManager\obj\Debug\net7.0\scopedcss\bundle\TasksManager.styles.css

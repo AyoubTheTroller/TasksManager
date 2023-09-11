@@ -16,20 +16,8 @@
             }
             else
             {
-                switch (usingType)
-                {
-                    case "SM":
-                        // TODO
-                        break;
-                    case "CA":
-                        LaunchApplication appRun = new LaunchApplication(usingType);
-                        appRun.Launch();
-                        break;
-                    default:
-                        Console.WriteLine("Not recognized input format, retry.");
-                        continue;
-                }
-                break;
+                LaunchApplication appRun = new LaunchApplication(usingType);
+                appRun.Launch();
             }
         }
     }

@@ -1,5 +1,6 @@
 public class TaskResult
 {
+    public int? id {get; set;}
     public string? TaskName { get; set; }
     public string? AssignedUser { get; set; }
     public string? AssignedProject { get; set; }
