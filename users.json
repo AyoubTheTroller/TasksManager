@@ -1,1 +1,1 @@
-[{"Username":"Balilla","Password":"romina"},{"Username":"mamma","Password":"baba"},{"Username":"dio","Password":"brando"}]
+[{"Username":"Balilla","Password":"romina","CanCreateProjects":false,"UserType":"Standard"},{"Username":"mamma","Password":"baba","CanCreateProjects":false,"UserType":"Standard"},{"Username":"dio","Password":"brando","CanCreateProjects":false,"UserType":"Standard"},{"Username":"sasso","Password":"ciao","CanCreateProjects":false,"UserType":"Standard"},{"Username":"dario","Password":"candela","CanCreateProjects":true,"UserType":"Premium"}]

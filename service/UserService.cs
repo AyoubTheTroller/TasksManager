@@ -4,18 +4,22 @@ using TasksManager.exception;
 
 namespace TasksManager.service{
     public class UserService{
-        public void addUser(string? username, string? password)
-        {
+        public User addUser(string? username, string? password, bool? isPremium){
             List<User> users = ReadUsers();
-
+            User newUser;
             if (users.Any(u => u.Username == username))
             {
                 throw new AuthenticationException("User already exists");
             }
-
-            var newUser = new User { Username = username, Password = password };
+            if(isPremium == true && isPremium is not null){
+                newUser = new PremiumUser { Username = username, Password = password };
+            }
+            else{
+                newUser = new User { Username = username, Password = password };
+            }
             users.Add(newUser);
             SaveUsers(users);
+            return newUser;
         }
 
 
@@ -44,12 +48,21 @@ namespace TasksManager.service{
             if (File.Exists("users.json"))
             {
                 string jsonString = File.ReadAllText("users.json");
-                var users = JsonSerializer.Deserialize<List<User>>(jsonString) ?? new List<User>();
-                return users.FirstOrDefault(u => u.Username == username);
+                var usersData = JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(jsonString) ?? new List<Dictionary<string, JsonElement>>();
+                var userData = usersData.FirstOrDefault(u => u["Username"].GetString() == username);
+                                
+                if (userData == null) return null;
+                                
+                if (userData["UserType"].GetString() == "Premium"){
+                    return new PremiumUser { Username = userData["Username"].GetString(), Password = userData["Password"].GetString() };
+                }
+                else{
+                    return new User { Username = userData["Username"].GetString(), Password = userData["Password"].GetString() };
+                }
             }
-
             return null;
         }
+
 
     }
 }

@@ -18,6 +18,8 @@ public class ConsoleGui
     private ListView? projectsListView;
     
     public Result? LastLoginSignupResult { get; private set; }
+    public bool? IsLoggedInUserPremium { get; set; } = false;
+
 
     public ConsoleGui(List<User>? users, List<Project>? projects, List<Taskk>? tasks)
     {
@@ -38,7 +40,9 @@ public class ConsoleGui
         ShowAddTaskForm(win);
         ShowTaskList(win);
         ShowExitButton(win);
-        ShowAddProjectForm(win);
+        if (IsLoggedInUserPremium is not null && IsLoggedInUserPremium == true){
+            ShowAddProjectForm(win);
+        }
         ShowProjectList(win);
         return win;        
     }
@@ -211,13 +215,14 @@ public class ConsoleGui
         var txtConfirmPassword = new TextField(15, 7, 40, "") { Secret = true, Visible = false };
         lblConfirmPassword.Visible = false;
         win.Add(lblConfirmPassword, txtConfirmPassword);
-
+        var chkPremiumUser = new CheckBox(1, 9, "Sign up as Premium User");
+        win.Add(chkPremiumUser);
         Result? result = null;
 
-        var btnAction = new Button(1, 9, "Login");
+        var btnAction = new Button(1, 11, "Login");
         btnAction.Clicked += () =>
         {
-            HandleBtnSignupAndLogicAction(ref result, radioGroup, txtUsername, txtPassword, txtConfirmPassword);
+            HandleBtnSignupAndLogicAction(ref result, radioGroup, txtUsername, txtPassword, txtConfirmPassword, chkPremiumUser);
         };
         win.Add(btnAction);
 
@@ -237,7 +242,7 @@ public class ConsoleGui
             }
         };
         // Exit button
-        var btnExit = new Button(1, 11, "Exit");
+        var btnExit = new Button(1, 13, "Exit");
         btnExit.Clicked += () => 
         {
             Application.RequestStop();
@@ -245,7 +250,7 @@ public class ConsoleGui
         win.Add(btnExit);
     }
 
-    private void HandleBtnSignupAndLogicAction(ref Result? result, RadioGroup radioGroup, TextField txtUsername, TextField txtPassword, TextField txtConfirmPassword){
+    private void HandleBtnSignupAndLogicAction(ref Result? result, RadioGroup radioGroup, TextField txtUsername, TextField txtPassword, TextField txtConfirmPassword, CheckBox chkPremiumUser){
         string? username = txtUsername.Text.ToString();
         string? password = txtPassword.Text.ToString();
 
@@ -253,7 +258,7 @@ public class ConsoleGui
         {
             if(username is not null && password is not null)
             {
-                result = new Result("Login", username, password);
+                result = new Result("Login", username, password, false);
                 LastLoginSignupResult = result;
                 OnLogin?.Invoke(result);
             }
@@ -271,9 +276,13 @@ public class ConsoleGui
                 MessageBox.ErrorQuery("Error", "Passwords do not match!", "Ok");
                 return;
             }
-            if(username is not null && password is not null)
-            {
-                result = new Result("Signup", username, password);
+            if(username is not null && password is not null){   
+                if(chkPremiumUser.Checked) {
+                    result = new Result("Signup", username, password, true);
+                }
+                else{
+                    result = new Result("Signup", username, password, false);
+                }
                 LastLoginSignupResult = result;
                 OnSignup?.Invoke(result);
             }

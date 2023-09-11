@@ -65,11 +65,15 @@ public class GuiStateManager
         }
     }
 
-    private void HandleLogin(Result result)
-    {
+    private void HandleLogin(Result result){
         var actionResult = _userController.ProcessUserInput(result);
-        if (actionResult.Status == ActionResultStatus.Success)
-        {
+        if (actionResult.Status == ActionResultStatus.Success){
+            if(actionResult.User is PremiumUser){
+                gui.IsLoggedInUserPremium = true;
+            }
+            else{
+                gui.IsLoggedInUserPremium = false;
+            }
             ShowDashboard();
         }
         else
@@ -78,11 +82,18 @@ public class GuiStateManager
         }
     }
 
+
     private void HandleSignup(Result result)
     {
         var actionResult = _userController.ProcessUserInput(result);
         if (actionResult.Status == ActionResultStatus.Success)
         {
+            if(actionResult.User is PremiumUser){
+                gui.IsLoggedInUserPremium = true;
+            }
+            else{
+                gui.IsLoggedInUserPremium = false;
+            }
             ShowDashboard();
         }
         else

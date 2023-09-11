@@ -7,22 +7,22 @@ class AuthenticateUser{
     string? _password;
     UserService? _userService;
     public AuthenticateUser(string? username, string? password, UserService? userService){
-        this._username = username;
-        this._password = password;
+        _username = username;
+        _password = password;
         _userService = userService;
     }
-    public void signUp(){
-        _userService?.addUser(_username, _password);
+    public User? signUp(bool? isPremium){
         try{
-            _userService?.addUser(_username, _password);
+            return _userService?.addUser(_username, _password, isPremium);
         }
         catch (AuthenticationException ex)
-        {
+        {   
             Console.WriteLine(ex.Message);
+            return null;
         }
     }
 
-    public void logIn(string? username, string? password){
+    public User? logIn(string? username, string? password){
         User? user = _userService?.SearchUser(username);
         if (user != null && password is not null){
             if(!password.Equals(user.Password)){
@@ -32,5 +32,6 @@ class AuthenticateUser{
         else{
             throw new InvalidUsernameException();
         }
+        return user;
     }
 }

@@ -7,8 +7,11 @@ namespace TasksManager.controller{
         public ActionResultStatus Status { get; set; }
         public string Message { get; set; }
 
-        public UserActionResult(ActionResultStatus status, string message)
+        public User User {get; set;}
+
+        public UserActionResult(ActionResultStatus status, string message, User user)
         {
+            User = user;
             Status = status;
             Message = message;
         }
@@ -37,20 +40,22 @@ namespace TasksManager.controller{
                 if (userInput.Action == "Signup")
                 {
                     authUser = new AuthenticateUser(userInput.Username, userInput.Password, _userService);
-                    authUser.signUp();
-                    return new UserActionResult(ActionResultStatus.Success, "Signup successful.");
+                    User? user = authUser.signUp(userInput.IsPremium);
+                    if(user is not null) return new UserActionResult(ActionResultStatus.Success, "Signup successful.",user);
+                    else return new UserActionResult(ActionResultStatus.Failure, "Signup failed.", new User());
                 }
                 else if (userInput.Action == "Login")
                 {
                     authUser = new AuthenticateUser(userInput.Username, userInput.Password, _userService);
-                    authUser.logIn(userInput.Username, userInput.Password);
-                    return new UserActionResult(ActionResultStatus.Success, "Login successful.");
+                    User? user = authUser.logIn(userInput.Username, userInput.Password);
+                    if(user is not null) return new UserActionResult(ActionResultStatus.Success, "Login successful.",user);
+                    else return new UserActionResult(ActionResultStatus.Failure, "Login failed.", new User());
                 }
-                return new UserActionResult(ActionResultStatus.Failure, "Invalid action.");
+                return new UserActionResult(ActionResultStatus.Failure, "Invalid action.",new User());
             }
             catch (Exception ex) when (ex is InvalidUsernameException || ex is InvalidPasswordException || ex is AuthenticationException)
             {
-                return new UserActionResult(ActionResultStatus.Failure, ex.Message);
+                return new UserActionResult(ActionResultStatus.Failure, ex.Message,new User());
             }
         }
 
