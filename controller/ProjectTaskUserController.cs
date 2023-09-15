@@ -1,5 +1,6 @@
 using TasksManager.Model;
 using TasksManager.service;
+using TasksManager.interfaces;
 
 namespace TasksManager.controller{
 
@@ -8,8 +9,8 @@ namespace TasksManager.controller{
         private ProjectService? _projectService;
         private UserService? _userService;
 
-        private TaskService? _taskService;
-        public ProjectTaskUserController(ProjectTaskUserService? projectTaskUserService, ProjectService? projectService, UserService? userService, TaskService? taskService){
+        private ITaskService? _taskService;
+        public ProjectTaskUserController(ProjectTaskUserService? projectTaskUserService, ProjectService? projectService, UserService? userService, ITaskService? taskService){
             _taskService = taskService;
             _projectTaskUserService = projectTaskUserService;
             _projectService = projectService;

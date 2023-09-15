@@ -40,8 +40,10 @@ public class LaunchApplication{
 
     public void initializeServer(){
         Console.Clear();
-        Server server = new Server(_userService, _taskService, _projectService, _prokjectTaskUserService);
-        server.start();
+        var services = new ServiceCollection();
+        var server = new Server(services);
+        server.Start();
+
     }
 
 }

@@ -1,8 +1,9 @@
 using System.Text.Json;
 using TasksManager.Model;
+using TasksManager.interfaces;
 
 namespace TasksManager.service{
-    public class TaskService{
+    public class TaskService : ITaskService{
         public void AddTask(Taskk? task)
         {
             List<Taskk> tasks = ReadTasks();
@@ -50,6 +51,30 @@ namespace TasksManager.service{
             }
             return null;
         }
+
+        public Taskk? UpdateTaskById(Taskk updatedTask){
+            List<Taskk> tasks = ReadTasks();
+            var toBeUpdated = tasks.FirstOrDefault(t => t.Id == updatedTask.Id);
+            if (toBeUpdated is not null)
+            {
+                toBeUpdated.Description = updatedTask.Description;
+                SaveTasks(tasks);
+                return toBeUpdated;
+            }
+            return null;
+        }
+
+        public Taskk? DeleteTaskById(int id){
+            List<Taskk> taskks = ReadTasks();
+            var toBeDeleted = taskks.FirstOrDefault(t=>t.Id == id);
+            if(toBeDeleted is not null){
+                taskks.Remove(toBeDeleted);
+                SaveTasks(taskks);
+                return toBeDeleted;
+            }
+            return null;
+        }
+
     }
 }
 

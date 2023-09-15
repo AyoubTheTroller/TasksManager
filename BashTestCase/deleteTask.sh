@@ -1,0 +1,1 @@
+curl -X DELETE "http://localhost:5000/task/delete/6" -H "Content-Type: application/json"
