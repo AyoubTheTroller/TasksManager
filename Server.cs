@@ -6,15 +6,11 @@ using TasksManager.service;
 using TasksManager.interfaces;
 class Server
 {
-    // Controllers
-    private readonly TaskController _taskController;
-    private readonly ProjectTaskUserController _projectTaskUserController;
-    private readonly AttachmentController _attachmentController;
-
-    private readonly InMemoryDb _dbContext;
-
-    public Server(IServiceCollection services)
-    {
+    private WebApplicationBuilder _builder; 
+    public Server(WebApplicationBuilder builder)
+    {   
+        _builder = builder;
+        var services = _builder.Services;
         services.AddDbContext<InMemoryDb>(options => options.UseInMemoryDatabase("TasksManager"));
 
         // DI
@@ -29,26 +25,18 @@ class Server
         services.AddSingleton<ProjectController>();
         services.AddSingleton<ProjectTaskUserController>();
         services.AddSingleton<AttachmentController>();
-
-        var serviceProvider = services.BuildServiceProvider(); // Building the service provider
-
-        _dbContext = serviceProvider.GetRequiredService<InMemoryDb>();
-        _taskController = serviceProvider.GetRequiredService<TaskController>();
-        _projectTaskUserController = serviceProvider.GetRequiredService<ProjectTaskUserController>();
-        _attachmentController = serviceProvider.GetRequiredService<AttachmentController>();
     }
 
     public void Start()
     {
-        var builder = WebApplication.CreateBuilder();
-        var app = builder.Build();
+        var app = _builder.Build();
         
-        app.MapGet("/tasks/all", () => _taskController.GetAllTasks());
-        app.MapGet("/tasks", (string username) => _projectTaskUserController.GetTasksByUserName(username));
-        app.MapGet("/task/{id}", (int id) => _taskController.getTaskkById(id));
-        app.MapPut("/task/update", (Taskk toBeUpdated) => _taskController.updateTaskById(toBeUpdated));
-        app.MapDelete("/task/delete/{id}", (int id) => _taskController.deleteTaskById(id));
-        app.MapPut("/attachment", (Attachment attachment) => _attachmentController.addAttachment(attachment));
+        app.MapGet("/tasks/all", (TaskController taskController) => taskController.GetAllTasks());
+        app.MapGet("/tasks", (string username, ProjectTaskUserController projectTaskUserController) => projectTaskUserController.GetTasksByUserName(username));
+        app.MapGet("/task/{id}", (int id, TaskController taskController) => taskController.getTaskkById(id));
+        app.MapPut("/task/update", (Taskk toBeUpdated, TaskController taskController) => taskController.updateTaskById(toBeUpdated));
+        app.MapDelete("/task/delete/{id}", (int id, TaskController taskController) => taskController.deleteTaskById(id));
+        app.MapPut("/attachment", (Attachment attachment, AttachmentController attachmentController) => attachmentController.addAttachment(attachment));
         app.Run();
     }
 }

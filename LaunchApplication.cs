@@ -40,8 +40,8 @@ public class LaunchApplication{
 
     public void initializeServer(){
         Console.Clear();
-        var services = new ServiceCollection();
-        var server = new Server(services);
+        var builder = WebApplication.CreateBuilder();
+        var server = new Server(builder);
         server.Start();
 
     }

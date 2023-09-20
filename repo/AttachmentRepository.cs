@@ -27,5 +27,10 @@ namespace TasksManager.Repository
         {
             return _context.Attachments.ToList();
         }
+
+        /*public Attachment Update(Attachment attachment){
+            Attachment? old_attachment = _context.Attachments.FirstOrDefault(a => a.Id == attachment.Id);
+            
+        }*/
     }
 }

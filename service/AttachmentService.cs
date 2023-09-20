@@ -1,27 +1,27 @@
-using TasksManager.Model;
-using TasksManager.interfaces;
-namespace TasksManager.service
-{
-    public class AttachmentService : IAttachmentService
+    using TasksManager.Model;
+    using TasksManager.interfaces;
+    namespace TasksManager.service
     {
-        private IAttachmentRepository _attachmentRepository;
-
-        public AttachmentService(IAttachmentRepository attachmentRepository){
-            _attachmentRepository = attachmentRepository;
-        }
-        public Attachment addAttachment(int? taskId, Attachment att)
+        public class AttachmentService : IAttachmentService
         {
-            var attachment = new Attachment
+            private IAttachmentRepository _attachmentRepository;
+
+            public AttachmentService(IAttachmentRepository attachmentRepository){
+                _attachmentRepository = attachmentRepository;
+            }
+            public Attachment addAttachment(int? taskId, Attachment att)
             {
-                FileName = att.FileName,
-                ContentType = att.ContentType,
-                Base64EncodedData = att.Base64EncodedData,
-                TaskId = taskId
-            };
+                var attachment = new Attachment
+                {
+                    FileName = att.FileName,
+                    ContentType = att.ContentType,
+                    Base64EncodedData = att.Base64EncodedData,
+                    TaskId = taskId
+                };
 
-            _attachmentRepository.Add(attachment);
-            return attachment;
+                _attachmentRepository.Add(attachment);
+                return attachment;
+            }
+
         }
-
     }
-}

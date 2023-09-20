@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0phek79frpUdAq5IFrwfwUIOcYp3mAA1NmVN/2kmNdUzVSqJApzCY67pUurHhnVEWOvAM7qNnvrHvtj+gCwM9A==",
+  "dgSpecHash": "V0THx1AW7iDJi6XT9FAcIvHkJ2gSDaDOU9Ou2TOhzXH6wtaCvAljUDYY+90Rge620e24OcISio335xKqbdeBCA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
+  "projectFilePath": "c:\\Users\\Lavoro\\Desktop\\Random Projects\\ASP.NET\\TasksManager\\TasksManager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lavoro\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Lavoro\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.11\\microsoft.entityframeworkcore.7.0.11.nupkg.sha512",
